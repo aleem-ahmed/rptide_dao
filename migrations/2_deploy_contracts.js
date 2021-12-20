@@ -24,7 +24,7 @@ module.exports = async function (deployer, network, accounts) {
 	const tokenFarm = await TokenFarm.deployed()
 
 
-	// [FUNCTION][TRANSFER] Transfer all (1 million) TokenFarm tokens to TokenFarm //
+	// [FUNCTION][TRANSFER] Transfer all (1 million) dapp tokens to TokenFarm //
 	await dappToken.transfer(tokenFarm.address, '1000000000000000000000000')
 
 
