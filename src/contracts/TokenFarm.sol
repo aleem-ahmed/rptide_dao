@@ -12,10 +12,28 @@ contract TokenFarm {
 	DappToken public dappToken;
 	DaiToken public daiToken;
 
-	// Runs once. Runs when the smart contract gets deployed to the network
+
+	// [MAPPING] //
+	mapping(address => uint) public stakingBalance;
+
+
+	// [CONSTRUCTOR] Runs once. Runs when the smart contract gets deployed to the network
 	constructor (DappToken _dappToken, DaiToken _daiToken) public {
 		// Set local variables to recieved variables
 		dappToken = _dappToken;
 		daiToken = _daiToken;
-	}   
+	}
+
+
+	// [1][PUBLIC] Stake Tokens //
+	function stakeTokens(uint _amount) public {
+
+		// Transger Mock Dai tokens to this contract for staking
+		daiToken.transferFrom(msg.sender, address(this), _amount);
+	}
+
+	// [2] Upstake Tokens //
+
+
+	// [3] Issuing Tokens //
 }

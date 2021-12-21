@@ -20,6 +20,7 @@ contract(
 		let dappToken
 		let tokenFarm
 
+
 		// [BEFORE] //
 		before(
 			async () => {
@@ -40,7 +41,7 @@ contract(
 						from: owner
 					}
 				)
-		}
+			}
 		)
 
 
@@ -82,7 +83,7 @@ contract(
 		describe(
 			'Token Farm deployment',
 			async () => {
-				// [IT] //
+				// [IT] Check name of //
 				it(
 					'has a name',
 					async () => {
