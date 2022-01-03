@@ -17,6 +17,7 @@ contract TokenFarm {
 	address[] public stakers;
 	mapping(address => uint) public stakingBalance;
 	mapping(address => bool) public hasStaked;
+	mapping(address => bool) public isStaking;
 
 
 	// [CONSTRUCTOR] Runs once. Runs when the smart contract gets deployed to the network //
@@ -40,6 +41,9 @@ contract TokenFarm {
 			stakers.push(msg.sender);
 		}
 
+		// Update staking balance
+		isStaking[msg.sender] = true;
+		hasStaked[msg.sender] = true;
 	}
 
 	// [2] Upstake Tokens //

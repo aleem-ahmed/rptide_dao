@@ -29,6 +29,7 @@ contract DappToken {
         balanceOf[msg.sender] = totalSupply;
     }
 
+
     // [FUNCTION][TRANSFER] //
     function transfer(address _to, uint256 _value) public returns (bool success) {
         require(balanceOf[msg.sender] >= _value);
@@ -42,6 +43,7 @@ contract DappToken {
         return true;
     }
 
+
     // [FUNCTION][APPROVE] //
     function approve(address _spender, uint256 _value) public returns (bool success) {
         allowance[msg.sender][_spender] = _value;
@@ -51,6 +53,7 @@ contract DappToken {
         
         return true;
     }
+
 
     // [FUNCTION][TRANSFER-FROM] //
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
