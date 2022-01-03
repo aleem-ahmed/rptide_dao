@@ -26,7 +26,7 @@ contract(
 		// [BEFORE] //
 		before(
 			async () => {
-				// Load Contracts //
+				// [LOAD-CONTRACT] //
 				daiToken = await DaiToken.new()
 				dappToken = await DappToken.new()
 				tokenFarm = await TokenFarm.new(dappToken.address, daiToken.address)
@@ -39,9 +39,7 @@ contract(
 				await daiToken.transfer(
 					investor,
 					tokens('100'),
-					{
-						from: owner
-					}
+					{ from: owner }
 				)
 			}
 		)
