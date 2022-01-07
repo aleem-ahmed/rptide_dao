@@ -202,12 +202,20 @@ contract(
 							'Token Farm mDai balance correct after unstaking'
 						)
 
-						// [VERIFY][READ][daiToken][stakingBalance] investor //
-						result = await daiToken.balanceOf(investor)
+						// [VERIFY][READ][tokenFarm][stakingBalance] investor //
+						result = await tokenFarm.stakingBalance(investor)
 						assert.equal(
 							result.toString(),
 							tokens('0'),
 							'investor mDai staking balance correct after unstaking'
+						)
+
+						// [VERIFY][READ][tokenFarm][stakingBalance] investor //
+						result = await tokenFarm.isStaking(investor)
+						assert.equal(
+							result.toString(),
+							'false',
+							'investor mDai staking status correct after unstaking'
 						)
 					}
 				)
