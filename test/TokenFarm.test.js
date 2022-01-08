@@ -114,104 +114,122 @@ contract(
 					async () => {
 						let result
 
-						// [READ][SMART-CONTRACT][daiToken] Investor balance //
+						// [READ][daiToken] BEFORE STAKING Investor's balance //
 						result = await daiToken.balanceOf(investor)
 						
-						// Check investor balance before staking //
+						// [VERIFY] balance 100 //
 						assert.equal(
 							result.toString(),
 							tokens('100'),
 							'Investor mDAI wallet balance correct before staking'
 						)
 
-						// [FUNCTION][SMART-CONTACT] Stake Mock DAI Tokens
+						// [APPROVE] Mock DAI Tokens //
 						await daiToken.approve(
 							tokenFarm.address,
 							tokens('100'),
 							{ from: investor }
 						)
 
-						// [FUNCTION][DEPOSIT][STAKE] //
+						// [STAKE-DEPOSIT] //
 						await tokenFarm.stakeTokens(
 							tokens('100'),
 							{ from: investor }
 						)
 
-						// [READ][SMART-CONTRACT][daiToken] investor balance after staking //
+						// [READ][daiToken] AFTER STAKNIG investor's balance //
 						result = await daiToken.balanceOf(investor)
+
+						// [VERIFY] //
 						assert.equal(
 							result.toString(),
 							tokens('0'),
 							'Investor mDAI wallet balance correct after staking'
 						)
 
-						// [READ][SMART-CONTRACT][daiToken] tokenFarm balance //
+						// [READ][daiToken] tokenFarm's balance //
 						result = await daiToken.balanceOf(tokenFarm.address)
+
+						// [VERIFY] tokenFarm has updated total staking balance //
 						assert.equal(
 							result.toString(),
 							tokens('100'),
 							'Token Farm mDAI wallet balance correct after staking'
 						)
 
-						// [READ][SMART-CONTRACT][tokenFarm] Investor balance //
+						// [READ][tokenFarm] Investor's balance //
 						result = await tokenFarm.stakingBalance(investor)
+
+						// [VERIFY] //
 						assert.equal(
 							result.toString(),
 							tokens('100'),
 							'Token Farm mDAI wallet balance correct after staking'
 						)
 
-						// [READ][SMART-CONTRACT][tokenFarm] Investor balance //
+						// [READ][tokenFarm] Investor's balance //
 						result = await tokenFarm.isStaking(investor)
+
+						// [VERIFY] //
 						assert.equal(
 							result.toString(),
 							'true',
 							'Investor staking status correct after staking'
 						)
 
-						// Issue Tokens //
+						// [ISSUE] //
 						await tokenFarm.issueTokens({ from: owner })
 
-						// Check balance after issuance //
+						// [READ][tokenFarm] Investor's balance after issuance //
 						result = await dappToken.balanceOf(investor)
+
+						// [VERIFY] //
 						assert.equal(
 							result.toString(),
 							tokens('100'),
 							'Investor DApp token wallet balance correct after issuance'
 						)
 
-						// Ensure that only owner can issue tokens //
+						// [AUTH] Ensure that only owner can issue tokens //
 						await tokenFarm.issueTokens({ from: investor }).should.be.rejected
 
-						// [FUNCTION][WITHDRAW][UNSTAKE] tokens //
+						// [FUNCTION][UNSTAKE-WITHDRAW] tokens //
 						await tokenFarm.unstakeTokens({ from: investor })
 
-						// [VERIFY][READ][daiToken][balanceOf] investor //
+						// [READ][daiToken] Investor's balance //
 						result = await daiToken.balanceOf(investor)
+
+						// [VERIFY] //
 						assert.equal(
 							result.toString(),
 							tokens('100'),
 							'Investor mDai wallet balance correct after unstaking'
 						)
 
-						// [VERIFY][READ][daiToken][balanceOf] tokenFarm Address //
+						// [READ][daiToken][balanceOf] tokenFarm Address //
 						result = await daiToken.balanceOf(tokenFarm.address)
+
+						// [VERIFY] //
 						assert.equal(
 							result.toString(),
 							tokens('0'),
 							'Token Farm mDai balance correct after unstaking'
 						)
 
-						// [VERIFY][READ][tokenFarm][stakingBalance] investor //
+						// [READ][tokenFarm][stakingBalance] investor //
 						result = await tokenFarm.stakingBalance(investor)
+						
+						// [VERIFY] //
 						assert.equal(
 							result.toString(),
 							tokens('0'),
 							'investor mDai staking balance correct after unstaking'
 						)
 
-						// [VERIFY][READ][tokenFarm][stakingBalance] investor //
+						// [READ][tokenFarm][stakingBalance] investor //
 						result = await tokenFarm.isStaking(investor)
+						
+						// [VERIFY] //
 						assert.equal(
 							result.toString(),
 							'false',

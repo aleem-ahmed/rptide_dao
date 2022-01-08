@@ -54,7 +54,7 @@ contract TokenFarm {
 	}
 
 
-	// [WITHDRAW] Upstake Tokens //
+	// [UNSTAKE-WITHDRAW] Upstake Tokens //
 	function unstakeTokens() public {
 		// Fetch staking balance
 		uint balance = stakingBalance[msg.sender];
@@ -73,7 +73,7 @@ contract TokenFarm {
 	}
 
 
-	// [REWARD] Issuing Tokens //
+	// [ISSUE] //
 	function issueTokens() public {
 		// [VALIDATE] Authorized Caller (owner only) //
 		require(msg.sender == owner, "caller must be owner");
