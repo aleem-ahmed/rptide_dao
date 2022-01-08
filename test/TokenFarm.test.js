@@ -114,10 +114,10 @@ contract(
 					async () => {
 						let result
 
-						// [READ][daiToken] BEFORE STAKING Investor's balance //
+						// [READ][daiToken] PRESTAKE balance Investor's //
 						result = await daiToken.balanceOf(investor)
 						
-						// [VERIFY] balance 100 //
+						// [VERIFY] balance == 100 //
 						assert.equal(
 							result.toString(),
 							tokens('100'),
@@ -137,17 +137,17 @@ contract(
 							{ from: investor }
 						)
 
-						// [READ][daiToken] AFTER STAKNIG investor's balance //
+						// [READ][daiToken] POSTSTAKE balance investor's //
 						result = await daiToken.balanceOf(investor)
 
-						// [VERIFY] //
+						// [VERIFY] daiBalance is 0 //
 						assert.equal(
 							result.toString(),
 							tokens('0'),
 							'Investor mDAI wallet balance correct after staking'
 						)
 
-						// [READ][daiToken] tokenFarm's balance //
+						// [READ][daiToken] balance tokenFarm's //
 						result = await daiToken.balanceOf(tokenFarm.address)
 
 						// [VERIFY] tokenFarm has updated total staking balance //
@@ -193,7 +193,7 @@ contract(
 						// [AUTH] Ensure that only owner can issue tokens //
 						await tokenFarm.issueTokens({ from: investor }).should.be.rejected
 
-						// [FUNCTION][UNSTAKE-WITHDRAW] tokens //
+						// [UNSTAKE-WITHDRAW] tokens //
 						await tokenFarm.unstakeTokens({ from: investor })
 
 						// [READ][daiToken] Investor's balance //
