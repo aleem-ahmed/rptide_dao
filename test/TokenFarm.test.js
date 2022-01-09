@@ -29,11 +29,13 @@ contract(
 				// [LOAD-CONTRACT] //
 				daiToken = await DaiToken.new()
 				dappToken = await DappToken.new()
-				tokenFarm = await TokenFarm.new(dappToken.address, daiToken.address)
+				tokenFarm = await TokenFarm.new(
+					dappToken.address,
+					daiToken.address
+				)
 
 				// [FUNCTION][TRANSFER] Transfer all (1 million) dapp tokens to TokenFarm //
 				await dappToken.transfer(tokenFarm.address, tokens('1000000'))
-
 
 				// [FUNCTION][TRANSFER] Transfer 100 Mock DAI tokens to investor //
 				await daiToken.transfer(
@@ -154,7 +156,7 @@ contract(
 						assert.equal(
 							result.toString(),
 							tokens('100'),
-							'Token Farm mDAI wallet balance correct after staking'
+							'TokenFarm mDAI wallet balance correct after staking'
 						)
 
 						// [READ][tokenFarm] Investor's balance //
@@ -164,13 +166,13 @@ contract(
 						assert.equal(
 							result.toString(),
 							tokens('100'),
-							'Token Farm mDAI wallet balance correct after staking'
+							'TokenFarm mDAI wallet balance correct after staking'
 						)
 
 						// [READ][tokenFarm] Investor's balance //
 						result = await tokenFarm.isStaking(investor)
 
-						// [VERIFY] //
+						// [VERIFY] Investor's staking status == true //
 						assert.equal(
 							result.toString(),
 							'true',
@@ -180,10 +182,10 @@ contract(
 						// [ISSUE] //
 						await tokenFarm.issueTokens({ from: owner })
 
-						// [READ][tokenFarm] Investor's balance after issuance //
+						// [READ][dappToken] Investor's balance after issuance //
 						result = await dappToken.balanceOf(investor)
 
-						// [VERIFY] //
+						// [VERIFY] Investor's dappToken balance == 100 //
 						assert.equal(
 							result.toString(),
 							tokens('100'),
@@ -213,13 +215,13 @@ contract(
 						assert.equal(
 							result.toString(),
 							tokens('0'),
-							'Token Farm mDai balance correct after unstaking'
+							'TokenFarm mDai balance correct after unstaking'
 						)
 
 						// [READ][tokenFarm][stakingBalance] investor //
 						result = await tokenFarm.stakingBalance(investor)
 						
-						// [VERIFY] //
+						// [VERIFY] Investor's staking balance == 0//
 						assert.equal(
 							result.toString(),
 							tokens('0'),
@@ -229,7 +231,7 @@ contract(
 						// [READ][tokenFarm][stakingBalance] investor //
 						result = await tokenFarm.isStaking(investor)
 						
-						// [VERIFY] //
+						// [VERIFY] Investor's staking status == false //
 						assert.equal(
 							result.toString(),
 							'false',
