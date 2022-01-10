@@ -14,8 +14,11 @@ contract TokenFarm {
 	DaiToken public daiToken;
 
 
-	// [MAPPING] //
+	// [STAKERS] //
 	address[] public stakers;
+
+
+	// [MAPPING] Balances //
 	mapping(address => uint) public stakingBalance;
 	mapping(address => bool) public hasStaked;
 	mapping(address => bool) public isStaking;
@@ -37,7 +40,7 @@ contract TokenFarm {
 		// [VALIDATE] _amount > 0 //
 		require(_amount > 0, "amount cannot be 0");
 
-		// [TRANSFER] Mock Dai tokens to THIS contract for staking //
+		// [TRANSFER] mDai tokens to THIS contract for staking //
 		daiToken.transferFrom(msg.sender, address(this), _amount);
 
 		// [UPDATE] Staking Balance //
@@ -78,12 +81,13 @@ contract TokenFarm {
 		// [VALIDATE] Authorized Caller (owner only) //
 		require(msg.sender == owner, "caller must be owner");
 
-		for (uint i = 0; i<stakers.length; i++) {
-			address recipient = stakers[i];
-			uint balance = stakingBalance[recipient];
+		// for each staker
+		for (uint i = 0; i < stakers.length; i++) {
+			address staker = stakers[i];
+			uint balance = stakingBalance[staker];
 
 			if (balance > 0) {
-				dappToken.transfer(recipient, balance);
+				dappToken.transfer(staker, balance);
 			}
 		}
 	}

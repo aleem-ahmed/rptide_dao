@@ -47,7 +47,7 @@ contract(
 		)
 
 
-		// [DESCRIBE] //
+		// [DESCRIBE] DaiToken.sol //
 		describe(
 			'Mock DAI deployment',
 			async () => {
@@ -64,7 +64,7 @@ contract(
 		)
 
 
-		// [DESCRIBE] //
+		// [DESCRIBE] DappToken.sol //
 		describe(
 			'Dapp Token deployment',
 			async () => {
@@ -81,7 +81,7 @@ contract(
 		)
 
 
-		// [DESCRIBE] //
+		// [DESCRIBE] TokenFarm.sol //
 		describe(
 			'Token Farm deployment',
 			async () => {
