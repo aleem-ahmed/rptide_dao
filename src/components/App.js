@@ -11,6 +11,20 @@ import Main from './Main'
 import Navbar from './Navbar'
 
 class App extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			account: '0x0',
+			daiToken: {},
+			dappToken: {},
+			tokenFarm: {},
+			daiTokenBalance: '0',
+			dappTokenBalance: '0',
+			stakingBalance: '0',
+			loading: true,
+		}
+	}
+
 	render() {
 		// [LOADING] //
 		let content
@@ -40,21 +54,6 @@ class App extends Component {
 		);
 	}
 
-	constructor(props) {
-		super(props)
-		this.state = {
-			account: '0x0',
-			daiToken: {},
-			dappToken: {},
-			tokenFarm: {},
-			daiTokenBalance: '0',
-			dappTokenBalance: '0',
-			stakingBalance: '0',
-			loading: true,
-		}
-	}
-
-
 	async componentWillMount() {
 		await this.loadWeb3()
 		await this.loadBlockchainData()
@@ -72,7 +71,6 @@ class App extends Component {
 			window.alert('non-ethereum browser detected. Install metamask')
 		}
 	}
-
 
 	async loadBlockchainData() {
 		const web3 = window.web3
@@ -145,6 +143,29 @@ class App extends Component {
 
 		// [STATE][LOADING] //
 		this.setState({ loading: false })
+	}
+
+	stakeTokens = async (amount) => {
+		// [STATE][LOADING] //
+		this.setState({ loading: true })
+
+		//
+		this.state.daiToken.methods.approve(this.state.tokenFarm._address, amount)
+			.send({ from: this.state.account })
+			.on(
+				'transactionHash',
+				(hash) => {
+					this.state.tokenFarm.methods.stakeTokens(amount)
+						.send({ from: this.state.account })
+						.on(
+							'transactionHash',
+							(hash) => {
+								// [STATE][LOADING] //
+								this.setState({ loading: false })
+							}
+						)
+				}
+			)
 	}
 }
 

@@ -15,7 +15,9 @@ class Main extends Component {
 
 						<div className="col-12 col-sm-4 text-center">
 							<h3>mDAI</h3>
-							<h6>{this.props.daiTokenBalance}</h6>
+							<h6>
+								{window.web3.utils.fromWei(this.props.daiTokenBalance, 'Ether')}
+							</h6>
 						</div>
 
 						<div className="col-12 col-sm-4 text-center">
@@ -34,8 +36,8 @@ class Main extends Component {
 					<form
 						className="mb-3"
 						onSubmit={
-							(event) => {
-								event.preventDefault()
+							(e) => {
+								e.preventDefault()
 								let amount
 								amount = this.input.value.toString()
 								amount = window.web3.utils.toWei(amount, 'Ether')
@@ -44,7 +46,9 @@ class Main extends Component {
 						}
 					>
 						<div>
-							<label className="float-left"><b>Stake Tokens</b></label>
+							<label className="float-left">
+								<b>Stake Tokens</b>
+							</label>
 							<span className="float-right text-muted">
 								Balance:
 								{window.web3.utils.fromWei(this.props.daiTokenBalance, 'Ether')}
