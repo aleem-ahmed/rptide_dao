@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import farmer from '../resources/images/farmer.png'
+import farmer from '../assets/images/farmer.png'
 
 class Navbar extends Component {
 	render() {
