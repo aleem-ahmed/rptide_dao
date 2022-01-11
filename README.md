@@ -1,12 +1,24 @@
-# Contract DaiToken
-Mock Dai that is going to pretend to be dai
+# rptide_dao2
 
-# Contract DappToken 
-Will be rewarded to person who locked in Mock Dai
+## Project setup
+```
+npm install
+```
 
-# Contract TokenFarm
-Yield Farming Smart Contract
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
+### Compiles and minifies for production
+```
+npm run build
+```
 
-## NOTES
-msg.sender = is a global variable inside solidity. sender is the person who initiated the contract
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
