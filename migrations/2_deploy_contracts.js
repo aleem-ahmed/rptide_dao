@@ -29,5 +29,6 @@ module.exports = async function (deployer, network, accounts) {
 
 
 	// [FUNCTION][TRANSFER] 100 mDAI tokens to investor //
+	console.log('INVESTOR ACCOUNT:', accounts[1]);
 	await daiToken.transfer(accounts[1], '100000000000000000000')
 }
