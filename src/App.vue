@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<BContainer v-if="!loading">
+		<BContainer v-if="!loading" class="my-5">
 			<BCard class="mb-5">
 				<BRow>
 					<BCol cols="12" class="text-center">
@@ -34,7 +34,7 @@
 					</span>
 				</div>
 
-				<div class="input-group mb-4">
+				<BInputGroup class="mb-4">
 					<input
 						v-model="amount"
 						type="text"
@@ -42,37 +42,40 @@
 						placeholder="0"
 						required
 					/>
-					<div class="input-group-append">
+
+					<BInputGroupAppend>
 						<div class="input-group-text">
 							<img :src="mDAIImage" height='32' alt=""/>
 							&nbsp;&nbsp;&nbsp; mDAI
 						</div>
-					</div>
+					</BInputGroupAppend>
+				</BInputGroup>
 
-					<h6>
-						{{ amount }}
-					</h6>
-				</div>
+				<h6 class="my-3 text-success">
+					Amount to be Staked: {{ amount }}
+				</h6>
 
 				<!-- [SUBMIT] STAKE -->
 				<BButton
-					type="submit"
 					variant="primary"
-					class="w-100 mb-3 btn-block btn-lg"
+					size="lg"
+					class="w-100 mb-3"
+					@click="stakeTokens()"
 				>Stake</BButton>
 
 				<!-- [SUBMIT] UNSTAKE -->
 				<BButton
-					type="submit"
-					class="w-100 btn-link btn-block btn-sm"
+					variant="none"
+					size="sm"
+					class="w-100"
 					@click="unstakeTokens()"
 				>Unstake</BButton>
 			</BCard>
 		</BContainer>
 
-		<div v-if="loading">
+		<BContainer v-if="loading">
 			Loading..
-		</div>
+		</BContainer>
 
 		<h3 class="text-danger">{{ error }}</h3>
 	</div>
@@ -221,19 +224,26 @@
 				try {
 					this.loading = true
 				
+					// [CONVERT] //
+					const amount = window.web3.utils.toWei(
+						this.amount,
+						"Ether"
+					)
+
 					// [APPROVE] //
 					await this.daiToken.methods
-						.approve(this.tokenFarm._address, this.amount)
+						.approve(this.tokenFarm._address, amount)
 						.send({ from: this.account })
 				
 					// [STAKE] //
 					await this.tokenFarm.methods
-						.stakeTokens(this.amount)
+						.stakeTokens(amount)
 						.send({ from: this.account })
 
 					this.loading = false
 				}
 				catch (err) {
+					console.log('sdf',err);
 					this.error = err
 				}
 			},
