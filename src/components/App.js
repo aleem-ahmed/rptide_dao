@@ -22,36 +22,8 @@ class App extends Component {
 			dappTokenBalance: '0',
 			stakingBalance: '0',
 			loading: true,
+			error: '',
 		}
-	}
-
-	render() {
-		// [LOADING] //
-		let content
-		if (this.state.loading) {
-			content = <h6>Loading..</h6>
-		}
-		else {
-			content = <Main
-				daiTokenBalance={this.state.daiTokenBalance}
-				dappTokenBalance={this.state.dappTokenBalance}
-				stakingBalance={this.state.stakingBalance}
-			/>
-		}
-
-		return (
-			<div>
-				<Navbar account={this.state.account} />
-
-				<div className="container mt-5">
-					<main role="main">
-						<div className="content">
-							{content}
-						</div>
-					</main>
-				</div>
-			</div>
-		);
 	}
 
 	async componentWillMount() {
@@ -146,26 +118,75 @@ class App extends Component {
 	}
 
 	stakeTokens = async (amount) => {
-		// [STATE][LOADING] //
-		this.setState({ loading: true })
+		try {
+			this.setState({ loading: true })
+	  
+			// [APPROVE] //
+			await this.state.daiToken.methods
+				.approve(this.state.tokenFarm._address, amount)
+				.send({ from: this.state.account })
+		
+			// [STAKE] //
+			await this.state.tokenFarm.methods
+				.stakeTokens(amount)
+				.send({ from: this.state.account })
 
-		//
-		this.state.daiToken.methods.approve(this.state.tokenFarm._address, amount)
-			.send({ from: this.state.account })
-			.on(
-				'transactionHash',
-				(hash) => {
-					this.state.tokenFarm.methods.stakeTokens(amount)
-						.send({ from: this.state.account })
-						.on(
-							'transactionHash',
-							(hash) => {
-								// [STATE][LOADING] //
-								this.setState({ loading: false })
-							}
-						)
-				}
-			)
+			this.setState({ loading: false })	
+		}
+		catch (err) {
+			this.state.error = err
+		}
+	}
+
+	unstakeTokens = async (amount) => {
+		try {
+			this.setState({ loading: true })
+		
+			// [STAKE] //
+			await this.state.tokenFarm.methods
+				.unstakeTokens()
+				.send({ from: this.state.account })
+
+			this.setState({ loading: false })	
+		}
+		catch (err) {
+			this.state.error = err
+		}
+	}
+
+	render() {
+		// [LOADING] //
+		let content
+		if (this.state.loading) {
+			content = <h6>Loading..</h6>
+		}
+		else {
+			content = <Main
+				daiTokenBalance={this.state.daiTokenBalance}
+				dappTokenBalance={this.state.dappTokenBalance}
+				stakingBalance={this.state.stakingBalance}
+				stakeTokens={this.stakeTokens}
+				unstakeTokens={this.unstakeTokens}
+			/>
+		}
+
+		return (
+			<div>
+				<Navbar account={this.state.account} />
+
+				<div className="container mt-5">
+					<main role="main">
+						<div className="content">
+							{content}
+							
+							<h6 className="text-danger">
+								{this.state.error}
+							</h6>
+						</div>
+					</main>
+				</div>
+			</div>
+		);
 	}
 }
 

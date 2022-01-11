@@ -10,24 +10,43 @@ class Main extends Component {
 				<div className="mb-5 card card-body">
 					<div className="row">
 						<div className="col-12 text-center">
-							<h1 class="mb-4">Your Wallet</h1>
+							<h1 className="mb-4">Your Wallet</h1>
 						</div>
 
 						<div className="col-12 col-sm-4 text-center">
 							<h3>mDAI</h3>
 							<h6>
-								{window.web3.utils.fromWei(this.props.daiTokenBalance, 'Ether')}
+								{
+									window.web3.utils.fromWei(
+										this.props.daiTokenBalance,
+										'Ether'
+									)
+								}
 							</h6>
 						</div>
 
 						<div className="col-12 col-sm-4 text-center">
 							<h3>DAPP</h3>
-							<h6>{this.props.dappTokenBalance}</h6>
+							<h6>
+								{
+									window.web3.utils.fromWei(
+										this.props.dappTokenBalance,
+										'Ether'
+									)
+								}
+							</h6>
 						</div>
 
 						<div className="col-12 col-sm-4 text-center">
 							<h3>Staking</h3>
-							<h6>{this.props.stakingBalance}</h6>
+							<h6>
+								{
+									window.web3.utils.fromWei(
+										this.props.stakingBalance,
+										'Ether'
+									)
+								}
+							</h6>
 						</div>
 					</div>
 				</div>
