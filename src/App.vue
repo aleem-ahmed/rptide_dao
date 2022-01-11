@@ -1,14 +1,35 @@
 <template>
 	<div id="app">
-		<div class="">
-			{{ loading }}
-			<h3>{{ account }}</h3>
-			<h3>{{ daiTokenBalance }}</h3>
-			<h3>{{ dappTokenBalance }}</h3>
-			<h3>{{ stakingBalance }}</h3>
+		<BContainer v-if="!loading">
+			<BCard class="mb-5">
+				<BRow>
+					<BCol cols="12" class="text-center">
+						<h1 class="mb-4">Your Wallet</h1>
+					</BCol>
 
-			<h3 class="text-danger">{{ error }}</h3>
+					<BCol sm="4" class="text-center">
+						<h3>mDAI</h3>
+						<h6>{{ this.daiTokenBalance }}</h6>
+					</BCol>
+
+					<BCol sm="4" class="text-center">
+						<h3>DAPP</h3>
+						<h6>{{ this.dappTokenBalance }}</h6>
+					</BCol>
+
+					<BCol sm="4" class="text-center">
+						<h3>Staking</h3>
+						<h6>{{ this.stakingBalance }}</h6>
+					</BCol>
+				</BRow>
+			</BCard>
+		</BContainer>
+
+		<div v-if="loading">
+			Loading..
 		</div>
+
+		<h3 class="text-danger">{{ error }}</h3>
 	</div>
 </template>
 
@@ -84,7 +105,10 @@
 						
 						// [STATE] //
 						this.daiToken = daiToken
-						this.daiTokenBalance = daiTokenBalance.toString()
+						this.daiTokenBalance = window.web3.utils.fromWei(
+							daiTokenBalance,
+							"Ether"
+						).toString()
 					}
 					else {
 						this.error = 'DaiToken contract not deployed to detected network'
@@ -107,7 +131,10 @@
 
 						// [STATE] //
 						this.dappToken = dappToken
-						this.dappTokenBalance = dappTokenBalance.toString()
+						this.dappTokenBalance = window.web3.utils.fromWei(
+							dappTokenBalance,
+							"Ether"
+						).toString()
 					}
 					else {
 						this.error = 'DappToken contract not deployed to detected network'
@@ -126,7 +153,10 @@
 						
 						// [STATE] //
 						this.tokenFarm = tokenFarm
-						this.stakingBalance = stakingBalance.toString()
+						this.stakingBalance = window.web3.utils.fromWei(
+							stakingBalance,
+							"Ether"
+						).toString()
 					}
 					else {
 						this.error = 'DappToken contract not deployed to detected network'
