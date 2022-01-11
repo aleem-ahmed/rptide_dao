@@ -1,0 +1,60 @@
+// [INIT] //
+$primary: #2060AD;
+$secondary: #78BE43;
+$light: rgb(245, 245, 245);
+$dark: rgb(0, 0, 0);
+
+
+// [MIX][LIGHTISH] //
+$primary-lightish: mix($primary, rgba(255, 255, 255, 1), $weight: 25%);
+$secondary-lightish: mix($secondary, rgba(220, 220, 220, 1), $weight: 25%);
+
+
+// [MIX][LIGHT] //
+$primary-light: mix($primary, rgba(255, 255, 255, 1), $weight: 75%);
+$secondary-light: mix($secondary, rgba(220, 220, 220, 1), $weight: 75%);
+
+
+// [MIX][LIGHTER] //
+$primary-lighter: mix($primary, rgba(255, 255, 255, 1), $weight: 25%);
+$secondary-lighter: mix($secondary, rgba(255, 255, 255, 1), $weight: 25%);
+
+
+// [MIX][LIGHTEST] //
+$primary-lightest: mix($primary, rgba(255, 255, 255, 1), $weight: 10%);
+$secondary-lightest: mix($secondary, rgba(255, 255, 255, 1), $weight: 10%);
+
+
+// [MIX][DARK] //
+$primary-dark: mix($primary, rgb(80, 80, 80));
+$secondary-dark: mix($secondary, rgb(80, 80, 80));
+
+
+// [MIX][DARKER] //
+
+
+// [MIX][DARKEST] //
+
+
+// [MIX][SHINE] //
+$primary-shine: mix($primary, rgba(255, 255, 255, 0.5));
+$secondary-shine: mix($secondary, rgba(255, 255, 255, 0.5));
+$light-shine: mix($light, rgba(255, 255, 255, 0.5));
+$dark-shine: mix($dark, rgba(255, 255, 255, 0.5));
+
+
+// [MIX][SHINE-LIGHT] //
+$primary-shine-light: mix($primary, rgba(255, 255, 255, 0.25));
+
+$secondary-shine-light: mix($secondary, rgba(255, 255, 255, 0.25));
+
+
+// [MIX][SHADE] //
+
+
+// [SVG] //
+$hero-svg: url('~@/assets/images/hero.svg');
+$polygon-svg: url('~@/assets/images/bg-light.svg');
+
+$bg-img: url('~@/assets/images/background.png');
+$hero-img: url('~@/assets/images/hero.png');
