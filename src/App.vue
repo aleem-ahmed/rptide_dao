@@ -23,6 +23,51 @@
 					</BCol>
 				</BRow>
 			</BCard>
+
+			<BCard>
+				<div>
+					<label class="float-left">
+						<b>Stake Tokens</b>
+					</label>
+					<span class="float-right text-muted">
+						Balance: {{ daiTokenBalance }}
+					</span>
+				</div>
+
+				<div class="input-group mb-4">
+					<input
+						v-model="amount"
+						type="text"
+						class="form-control form-control-lg"
+						placeholder="0"
+						required
+					/>
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<img :src="mDAIImage" height='32' alt=""/>
+							&nbsp;&nbsp;&nbsp; mDAI
+						</div>
+					</div>
+
+					<h6>
+						{{ amount }}
+					</h6>
+				</div>
+
+				<!-- [SUBMIT] STAKE -->
+				<BButton
+					type="submit"
+					variant="primary"
+					class="w-100 mb-3 btn-block btn-lg"
+				>Stake</BButton>
+
+				<!-- [SUBMIT] UNSTAKE -->
+				<BButton
+					type="submit"
+					class="w-100 btn-link btn-block btn-sm"
+					@click="unstakeTokens()"
+				>Unstake</BButton>
+			</BCard>
 		</BContainer>
 
 		<div v-if="loading">
@@ -47,6 +92,8 @@
 
 		data() {
 			return {
+				mDAIImage: require('./assets/images/dai.png'),
+				amount: '',
 				account: '0x0',
 				daiToken: {},
 				dappToken: {},
@@ -170,18 +217,18 @@
 				}
 			},
 
-			async stakeTokens(amount) {
+			async stakeTokens() {
 				try {
 					this.loading = true
 				
 					// [APPROVE] //
 					await this.daiToken.methods
-						.approve(this.tokenFarm._address, amount)
+						.approve(this.tokenFarm._address, this.amount)
 						.send({ from: this.account })
 				
 					// [STAKE] //
 					await this.tokenFarm.methods
-						.stakeTokens(amount)
+						.stakeTokens(this.amount)
 						.send({ from: this.account })
 
 					this.loading = false
@@ -191,10 +238,8 @@
 				}
 			},
 
-			async unstakeTokens(amount) {
+			async unstakeTokens() {
 				try {
-					console.log('UNSTAKING EVERYTHING NOT THIS AMOUNT:', amount)
-
 					this.loading = true
 				
 					// [STAKE] //
