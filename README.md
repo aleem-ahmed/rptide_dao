@@ -1,4 +1,4 @@
-# rptide_dao2
+# rptide_dao
 
 ## Project setup
 ```
@@ -22,3 +22,21 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## TRUFFLE
+
+### Migration
+```
+npm run migration
+```
+
+### Migration Reset
+```
+npm run migration-reset
+```
+
+### Issue DAPP token to Stakers
+```
+npm run issue-tokens
+```
