@@ -77,7 +77,9 @@
 			Loading..
 		</BContainer>
 
-		<h3 class="text-danger">{{ error }}</h3>
+		<BContainer v-if="error">
+			<h3 class="text-danger">Error: {{ error }}</h3>
+		</BContainer>
 	</div>
 </template>
 
