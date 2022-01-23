@@ -1,11 +1,14 @@
 pragma solidity ^0.5.0;
 
 contract DappToken {
-	// [INIT] //
+	// [INIT][ERC20-OPTIONAL] //
 	string  public name = "DApp Token";
 	string  public symbol = "DAPP";
-	uint256 public totalSupply = 1000000000000000000000000; // 1 million tokens
 	uint8   public decimals = 18;
+
+
+	// [INIT][ERC20-REQUIRED] //
+	uint256 public totalSupply = 1000000000000000000000000; // 1 million tokens
 
 
 	// [EVENT] //
@@ -24,21 +27,19 @@ contract DappToken {
 	);
 
 
-	// [MAPPING] Balances //
+	// [MAPPING][ERC20-REQUIRED] //
 	mapping(address => uint256) public balanceOf;
-
-	// [MAPPING] Allowance //
 	mapping(address => mapping(address => uint256)) public allowance;
 
 
 	// [CONSTRUCTOR] //
-	constructor() public {
+	constructor () public {
 		// Set totalSupply
 		balanceOf[msg.sender] = totalSupply;
 	}
 
 
-	// [FUNCTION][PUBLIC][TRANSFER] Transfer funds from mes.sender to specifed value //
+	// [FUNCTION][ERC20-REQUIRED] //
 	function transfer(address _to, uint256 _value) public returns (bool success) {
 		require(balanceOf[msg.sender] >= _value);
 
@@ -52,7 +53,7 @@ contract DappToken {
 	}
 
 
-	// [FUNCTION][PUBLIC][APPROVE] Approve external contract to spend //
+	// [FUNCTION][ERC20-REQUIRED] //
 	function approve(address _spender, uint256 _value) public returns (bool success) {
 		allowance[msg.sender][_spender] = _value;
 
@@ -63,7 +64,7 @@ contract DappToken {
 	}
 
 
-	// [FUNCTION][PUBLIC][TRANSFER-FROM] //
+	// [FUNCTION][ERC20-REQUIRED] //
 	function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
 		require(_value <= balanceOf[_from]);
 		require(_value <= allowance[_from][msg.sender]);
