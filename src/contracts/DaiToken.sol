@@ -4,7 +4,7 @@ contract DaiToken {
 	// [INIT][ERC20-OPTIONAL] //
 	string public name = "Mock DAI Token";
 	string public symbol = "mDAI";
-	uint8   public decimals = 18;
+	uint8 public decimals = 18;
 
 
 	// [INIT][ERC20-REQUIRED] //
